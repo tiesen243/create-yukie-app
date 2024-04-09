@@ -21,6 +21,7 @@ const Page: NextPage = () => {
         .post(arg)
         .then(({ data, error }) => (error ? Promise.reject(error.value) : data)),
   )
+  console.log(error)
 
   const action = (fd: FormData) => {
     const data = Object.fromEntries(fd) as unknown as Form
