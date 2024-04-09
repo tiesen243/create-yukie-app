@@ -12,13 +12,11 @@ export const siteConfig = {
       template: '%s | Next Elysia',
     },
     description: 'Get started with Next.js and Elysia',
-    openGraph: {
-      images: '/og.jpg',
-    },
+    openGraph: { images: '/og.png' },
     twitter: {
       site: '@tiesen243',
       card: 'summary_large_image',
-      images: '/og.jpg',
+      images: '/og.png',
     },
     icons: { icon: '/favicon.ico' },
     alternates: { canonical: getBaseUrl() },

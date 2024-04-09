@@ -42,8 +42,10 @@ export const auth = async (): Promise<{ session: Session | null; user: User | nu
 export const authMiddleware = new Elysia({ name: 'Middleware.Auth' }).derive(
   { as: 'scoped' },
   async ({ cookie: { auth_session }, error }) => {
-    if (!auth_session) return error(401, { message: 'You are not authenticated.' })
-    const { session, user } = await getSession(`${lucia.sessionCookieName}=${auth_session.value}`)
+    const auth = cookies().get(lucia.sessionCookieName)
+    if (!auth || !auth_session) return error(401, { message: 'You are not authenticated.' })
+    const value = auth.value || auth_session.value
+    const { session, user } = await getSession(`${lucia.sessionCookieName}=${value}`)
     return { user, session }
   },
 )
