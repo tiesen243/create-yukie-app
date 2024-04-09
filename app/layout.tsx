@@ -1,12 +1,12 @@
 import type { Metadata, NextPage } from 'next'
 import { Inter } from 'next/font/google'
 
+import { Header } from '@/components/header'
 import { Provider } from '@/components/provider'
+import { Toaster } from '@/components/ui/sonner'
 import { siteConfig } from '@/lib/site'
 import { cn } from '@/lib/utils'
 import './globals.css'
-import { Header } from '@/components/header'
-import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
