@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) and [ElysiaJS](https://elysia.com) project.
+
+## Tech Stack
+
+1. [Next.js](https://nextjs.org/) - React Framework.
+2. [ElysiaJS](https://elysiajs.com) - API Framework.
+3. [Lucia](https://lucia-auth.com) - Authentication library.
+4. [Prisma](https://www.prisma.io/) - Database Toolkit.
+5. [SWR](https://swr.vercel.app/) - React Hooks library for data fetching.
+6. [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+7. [Bun](https://bun.id.vn) - Development Environment.
 
 ## Getting Started
 
-First, run the development server:
+First, add the following to your `.env.local` file:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# .env.local
+DATABASE_URL=""
+```
+
+Then, run the following commands to create the database and run the migrations:
+
+```bash
+# Elysia only runs on Bun
 bun dev
 ```
 
+If you want to add more environment variables, you can add them to the `.env.local` file and remember to config in `env.mjs`:
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+And open [http://localhost:3000/api/elysia/docs](http://localhost:3000/api/elysia/docs) to see the API documentation.
 
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
+- [Documentation](https://tiesen.id.vn/blog/next-elysia) - my blog post about this project.
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Elysia Documentation](https://elysiajs.com) - learn about Elysia features and API.
