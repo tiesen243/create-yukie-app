@@ -38,3 +38,7 @@ export const UserRoute = new Elysia({ name: 'Route.User', prefix: '/user' })
     },
     { body: 'signIn' },
   )
+  .post('/sign-out', async () => {
+    const sessionCookie = lucia.createBlankSessionCookie()
+    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
+  })

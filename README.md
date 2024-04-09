@@ -12,7 +12,7 @@ This is a [Next.js](https://nextjs.org/) and [ElysiaJS](https://elysia.com) proj
 
 ## Getting Started
 
-First, add the following to your `.env.local` file:
+First, add the following to your `.env` file:
 
 ```bash
 # .env.local

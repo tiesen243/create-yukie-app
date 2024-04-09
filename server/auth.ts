@@ -21,7 +21,7 @@ export const lucia = new Lucia(adapter, {
   getUserAttributes: (attr) => ({ name: attr.name, email: attr.email }),
 })
 
-const getSession = async (
+export const validateCookie = async (
   cookie: string,
 ): Promise<{
   session: Session | null
@@ -36,7 +36,7 @@ const getSession = async (
 export const auth = async (): Promise<{ session: Session | null; user: User | null }> => {
   const cookie = cookies().get(lucia.sessionCookieName)
   if (!cookie) return { session: null, user: null }
-  return getSession(`${lucia.sessionCookieName}=${cookie.value}`)
+  return validateCookie(`${lucia.sessionCookieName}=${cookie.value}`)
 }
 
 export const authMiddleware = new Elysia({ name: 'Middleware.Auth' }).derive(
@@ -45,7 +45,7 @@ export const authMiddleware = new Elysia({ name: 'Middleware.Auth' }).derive(
     const auth = cookies().get(lucia.sessionCookieName)
     if (!auth || !auth_session) return error(401, { message: 'You are not authenticated.' })
     const value = auth.value || auth_session.value
-    const { session, user } = await getSession(`${lucia.sessionCookieName}=${value}`)
+    const { session, user } = await validateCookie(`${lucia.sessionCookieName}=${value}`)
     return { user, session }
   },
 )

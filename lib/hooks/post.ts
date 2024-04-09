@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 
-import { api } from '@/lib/api/client'
+import { api } from '@/lib/api'
 
 export const usePost = () => {
   const {

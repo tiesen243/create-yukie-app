@@ -1,6 +1,7 @@
 import { Typography } from '@/components/ui/typography'
-import { ThemeBtn } from './theme-btn'
 import { auth } from '@/server/auth'
+import { LogOutBtn } from './log-out-btn'
+import { ThemeBtn } from './theme-btn'
 
 export const Header: React.FC = async () => {
   const { user } = await auth()
@@ -24,7 +25,10 @@ export const Header: React.FC = async () => {
               </Typography>
             </span>
           ) : (
-            <Typography variant="h4">Hello, {user.name}</Typography>
+            <>
+              <Typography variant="h4">Hello, {user.name}</Typography>
+              <LogOutBtn />
+            </>
           )}
           <ThemeBtn />
         </div>

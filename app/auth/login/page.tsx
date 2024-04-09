@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
-import { api } from '@/lib/api/client'
+import { api } from '@/lib/api'
 
 interface Form {
   email: string
