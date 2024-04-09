@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:generate": "prisma generate --no-engine",
+    "db:generate": "prisma generate",
     "db:format": "prisma format",
     "postinstall": "bun db:generate"
   },

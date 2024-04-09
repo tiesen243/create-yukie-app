@@ -1,10 +1,10 @@
-import { Lucia, Session, User } from 'lucia'
+import { Lucia, type Session, type User } from 'lucia'
 import type { User as DbUser } from '@prisma/client'
+import Elysia from 'elysia'
 
 import { adapter } from '@/prisma'
 import { env } from '@/env.mjs'
 import { cookies } from 'next/headers'
-import Elysia from 'elysia'
 
 declare module 'lucia' {
   interface Register {
