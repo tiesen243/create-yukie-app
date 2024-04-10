@@ -8,7 +8,6 @@ This is a [Next.js](https://nextjs.org/) and [ElysiaJS](https://elysia.com) proj
 4. [Prisma](https://www.prisma.io/) - Database Toolkit.
 5. [SWR](https://swr.vercel.app/) - React Hooks library for data fetching.
 6. [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
-7. [Bun](https://bun.id.vn) - Development Environment.
 
 ## Getting Started
 
