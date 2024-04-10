@@ -1,7 +1,7 @@
 import { Typography } from '@/components/ui/typography'
+import { auth } from '@/server/auth'
 import { LogOutBtn } from './log-out-btn'
 import { ThemeBtn } from './theme-btn'
-import { auth } from '@/server/auth'
 
 export const Header: React.FC = async () => {
   const { user } = await auth()

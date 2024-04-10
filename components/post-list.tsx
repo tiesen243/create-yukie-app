@@ -1,9 +1,10 @@
 'use client'
 
+import { Loader2Icon, XIcon } from 'lucide-react'
+
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePost } from '@/lib/hooks'
-import { Loader2Icon, XIcon } from 'lucide-react'
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 
 export const PostList: React.FC<{ user?: string }> = ({ user }) => {
   const { posts, isLoading, getError, del } = usePost()

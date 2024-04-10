@@ -2,10 +2,10 @@ import { ExternalLinkIcon } from 'lucide-react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 
-import { Button } from '@/components/ui/button'
-import { auth } from '@/server/auth'
 import { CreatePost } from '@/components/create-post'
 import { PostList } from '@/components/post-list'
+import { Button } from '@/components/ui/button'
+import { auth } from '@/server/auth'
 
 const Page: NextPage = async () => {
   const { user } = await auth()

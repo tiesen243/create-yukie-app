@@ -3,13 +3,13 @@ import { Scrypt } from 'lucia'
 import { cookies } from 'next/headers'
 
 import { db } from '@/prisma'
-import { UserModel } from '@/server/models/user.model'
+import { userModel } from '@/server/models/user.model'
 import { context } from '@/server/plugins'
 import { lucia } from '@/server/auth/lucia'
 
 export const userRoute = new Elysia({ name: 'Route.User', prefix: '/user' })
   .use(context)
-  .use(UserModel)
+  .use(userModel)
 
   // [POST] /user/sign-up
   .post(

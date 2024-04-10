@@ -1,12 +1,12 @@
 'use client'
 
 import type { NextPage } from 'next'
+import { useRouter } from 'next/navigation'
+import useSWRMutation from 'swr/mutation'
 
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
-import useSWRMutation from 'swr/mutation'
 import { api } from '@/lib/api'
-import { useRouter } from 'next/navigation'
 
 const Page: NextPage = () => {
   const router = useRouter()

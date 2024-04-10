@@ -1,10 +1,11 @@
 import Elysia from 'elysia'
+
 import { context } from '@/server/plugins'
-import { PostModel } from '@/server/models/post.model'
+import { postModel } from '@/server/models/post.model'
 
 export const postRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
   .use(context)
-  .use(PostModel)
+  .use(postModel)
 
   .get('/getAll', async ({ db, error }) => {
     const posts = await db.post.findMany({

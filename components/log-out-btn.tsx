@@ -1,10 +1,10 @@
 'use client'
 
 import { LogOutIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
-import { useRouter } from 'next/navigation'
 
 export const LogOutBtn: React.FC = async () => {
   const router = useRouter()

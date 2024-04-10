@@ -12,4 +12,4 @@ const signUp = t.Object({
 
 const signIn = t.Omit(signUp, ['name'])
 
-export const UserModel = new Elysia({ name: 'Model.User' }).model({ signUp, signIn })
+export const userModel = new Elysia({ name: 'Model.User' }).model({ signUp, signIn })
