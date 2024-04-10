@@ -1,47 +1,43 @@
 import Elysia from 'elysia'
-
-import { authMiddleware } from '@/server/auth'
+import { context } from '@/server/plugins'
 import { PostModel } from '@/server/models/post.model'
-import { db } from '@/prisma'
 
-export const PostRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
-  // TODO: set up
+export const postRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
+  .use(context)
   .use(PostModel)
 
-  .get('/all', async ({ error }) => {
+  .get('/getAll', async ({ db, error }) => {
     const posts = await db.post.findMany({
+      include: { author: { select: { id: true, name: true } } },
       orderBy: { createdAt: 'desc' },
-      select: {
-        id: true,
-        content: true,
-        author: { select: { id: true, name: true } },
-      },
     })
-    if (!posts || posts.length === 0) return error(404, { message: 'No posts found' })
+    if (!posts) return error(404, { message: 'No posts found' })
     return posts
   })
 
-  // NOTE: This route requires authentication
-  .use(authMiddleware)
+  .onBeforeHandle({ as: 'scoped' }, ({ session, user, error }) => {
+    if (!session || !user) return error(401, { message: 'Unauthorized' })
+  })
+
   .post(
     '/create',
-    async ({ user, body: { content }, error }) => {
-      const post = await db.post.create({
+    async ({ db, body: { content }, user, error }) => {
+      const newPost = await db.post.create({
         data: { content, author: { connect: { id: user?.id } } },
       })
-      if (!post) return error(500, { message: 'Failed to create post' })
+      if (!newPost) return error(500, { message: 'Failed to create post' })
       return { message: 'Post created successfully' }
     },
-    { body: 'CreatePost' },
+    { body: 'createPost' },
   )
 
-  .delete('/del/:id', async ({ params: { id }, user, error }) => {
-    const post = await db.post.findUnique({ where: { id } })
-    if (!post) return error(404, { message: 'Post not found' })
-
-    if (post.authorId !== user?.id)
-      return error(403, { message: 'You are not authorized to delete this post' })
-
-    await db.post.delete({ where: { id } })
-    return { message: 'Post deleted successfully' }
-  })
+  .delete(
+    '/del',
+    async ({ db, body: { id }, error }) => {
+      const post = await db.post.findUnique({ where: { id } })
+      if (!post) return error(404, { message: 'Post not found' })
+      await db.post.delete({ where: { id } })
+      return { message: 'Post deleted successfully' }
+    },
+    { body: 'deletePost' },
+  )

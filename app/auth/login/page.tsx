@@ -1,43 +1,41 @@
 'use client'
 
 import type { NextPage } from 'next'
-import useSWRMutation from 'swr/mutation'
-import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
+import useSWRMutation from 'swr/mutation'
 import { api } from '@/lib/api'
+import { useRouter } from 'next/navigation'
 
-interface Form {
-  email: string
-  password: string
-}
 const Page: NextPage = () => {
   const router = useRouter()
-  const { trigger, isMutating, error } = useSWRMutation<unknown, Error, string, Form>(
-    'sign-up',
-    (_, { arg }) =>
-      api.user['sign-in']
-        .post(arg)
-        .then(({ data, error }) => (error ? Promise.reject(error.value) : data)),
+  const { trigger, isMutating, error } = useSWRMutation<unknown, Error, string, FormData>(
+    'login',
+    async (_, { arg }) => {
+      const body = Object.fromEntries(arg.entries()) as { email: string; password: string }
+      const { data, error } = await api.user['sign-in'].post(body)
+      if (error) throw error.value
+      return data
+    },
   )
-  console.log(error)
-
-  const action = (fd: FormData) => {
-    const data = Object.fromEntries(fd) as unknown as Form
-    trigger(data)
-      .then(() => router.push('/'))
-      .then(() => router.refresh())
-  }
 
   return (
-    <form action={action} className="mx-auto max-w-screen-md space-y-4">
-      <FormField label="Email" name="email" type="email" message={error?.fieldsError?.email} />
+    <form
+      action={(fd: FormData) => {
+        trigger(fd).then(() => {
+          router.push('/')
+          router.refresh()
+        })
+      }}
+      className="mx-auto max-w-screen-md space-y-4"
+    >
+      <FormField label="Email" name="email" type="email" message={error?.fieldErrors?.email} />
       <FormField
         label="Password"
         name="password"
         type="password"
-        message={error?.fieldsError?.password}
+        message={error?.fieldErrors?.password}
       />
       <Button type="submit" className="w-full" isLoading={isMutating}>
         Login

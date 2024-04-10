@@ -7,8 +7,8 @@ import { toast } from 'sonner'
 export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => (
   <SWRConfig
     value={{
-      onError: (error: Error) => !error.fieldsError && toast.error(error.message),
-      onSuccess: (data: Res) => data.message && toast.success(data.message),
+      onError: (error: Error) => !error.fieldErrors && toast.error(error.message),
+      onSuccess: (data: Res) => data?.message && toast.success(data.message),
     }}
   >
     <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>

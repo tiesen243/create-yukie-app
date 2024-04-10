@@ -1,6 +1,6 @@
 interface Error {
   message: string
-  fieldsError?: Record<string, string>
+  fieldErrors?: Record<string, string>
 }
 
 interface Res<T = any> {

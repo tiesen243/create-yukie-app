@@ -29,7 +29,6 @@
     "lucide-react": "^0.366.0",
     "next": "14.1.4",
     "next-themes": "^0.3.0",
-    "oslo": "^1.2.0",
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.4.41",
@@ -53,6 +52,5 @@
     "prisma": "^5.12.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
-  },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  }
 }

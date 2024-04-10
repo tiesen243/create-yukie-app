@@ -1,7 +1,7 @@
 import useSWR from 'swr'
-import useSWRMutation from 'swr/mutation'
 
 import { api } from '@/lib/api'
+import useSWRMutation from 'swr/mutation'
 
 export const usePost = () => {
   const {
@@ -9,39 +9,46 @@ export const usePost = () => {
     error: getError,
     isLoading,
     mutate,
-  } = useSWR('posts', () =>
-    api.post.all.get().then(({ error, data }) => (error ? Promise.reject(error.value) : data)),
-  )
+  } = useSWR('posts', async () => {
+    const { data, error } = await api.post.getAll.get()
+    if (error) throw error.value
+    return data
+  })
 
   const {
     trigger: create,
     isMutating,
     error: createError,
-  } = useSWRMutation<unknown, Error, string, { content: string }>('posts', (_, { arg }) =>
-    api.post.create.post(arg).then(({ data, error }) => {
+  } = useSWRMutation<unknown, Error, string, FormData>('createPost', async (_, { arg }) => {
+    const content = String(arg.get('content'))
+    const { data, error } = await api.post.create.post({ content })
+    if (error) throw error.value
+    mutate()
+    return data
+  })
+
+  const { trigger: del } = useSWRMutation<unknown, Error, string, { id: string }>(
+    'deletePost',
+    async (_, { arg: { id } }) => {
+      const { data, error } = await api.post.del.delete({ id })
       if (error) throw error.value
       mutate()
       return data
-    }),
-  )
-
-  const { trigger: del } = useSWRMutation<unknown, Error, string, string>('posts', (_, { arg }) =>
-    api.post
-      .del({ id: arg })
-      .delete()
-      .then(() => mutate()),
+    },
   )
 
   return {
+    /* get posts */
     posts,
     getError,
     isLoading,
-    mutate,
 
+    /* create post */
     create,
     isMutating,
     createError,
 
+    /* delete post */
     del,
   }
 }

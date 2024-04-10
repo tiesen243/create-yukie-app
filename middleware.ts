@@ -1,14 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export const middleware = async (req: NextRequest) => {
-  const session = req.cookies.get('auth_session')
-  if (!session) return NextResponse.redirect(new URL('/auth/login', req.url))
+export const middleware = async (request: NextRequest): Promise<NextResponse> => {
+  const cookie = request.cookies.get('auth_session')
+  if (!cookie) return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
+
+  return NextResponse.next()
 }
 
 export const config = {
   matcher: ['/server'],
 }
-
-/* ERROR: Cross-reference between Middleware and Edge Function
- * Dont know why this error is coming when deploying the project to Vercel
- */

@@ -19,7 +19,7 @@ export const PostList: React.FC<{ user?: string }> = ({ user }) => {
         <Card key={post.id}>
           {post.author.id === user && (
             <Button
-              onClick={() => del(post.id)}
+              onClick={() => del({ id: post.id })}
               className="absolute right-2 top-2 z-10"
               variant="ghost"
               size="icon"
