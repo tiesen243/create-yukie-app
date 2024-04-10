@@ -1,6 +1,7 @@
 import { ExternalLinkIcon } from 'lucide-react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { CreatePost } from '@/components/create-post'
 import { PostList } from '@/components/post-list'
@@ -33,19 +34,15 @@ const Page: NextPage = async () => {
 
         <div className="flex gap-4">
           <Button className="gap-2 rounded-full" asChild>
-            <a
-              href="https://tiesen.id.vn/blog/next-elysia"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href="https://tiesen.id.vn/blog/next-elysia">
               Documentation <ExternalLinkIcon size={16} />
-            </a>
+            </Link>
           </Button>
 
           <Button variant="secondary" className="gap-2 rounded-full" asChild>
-            <a href="/api/elysia/docs" target="_blank" rel="noopener noreferrer">
-              API Documentation <ExternalLinkIcon size={16} />
-            </a>
+            <Link href="/server">
+              Middleware example <ExternalLinkIcon size={16} />
+            </Link>
           </Button>
         </div>
       </div>
