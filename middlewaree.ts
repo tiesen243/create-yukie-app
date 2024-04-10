@@ -8,3 +8,7 @@ export const middleware = async (req: NextRequest) => {
 export const config = {
   matcher: ['/middleware'],
 }
+
+/* ERROR: Cross-reference between Middleware and Edge Function
+ * Dont know why this error is coming when deploying the project to Vercel
+ */
