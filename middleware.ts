@@ -6,7 +6,7 @@ export const middleware = async (req: NextRequest) => {
 }
 
 export const config = {
-  matcher: ['/middleware'],
+  matcher: ['/server'],
 }
 
 /* ERROR: Cross-reference between Middleware and Edge Function

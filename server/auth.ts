@@ -5,6 +5,7 @@ import Elysia from 'elysia'
 import { adapter } from '@/prisma'
 import { env } from '@/env.mjs'
 import { cookies } from 'next/headers'
+import { cache } from 'react'
 
 declare module 'lucia' {
   interface Register {
@@ -21,17 +22,17 @@ export const lucia = new Lucia(adapter, {
   getUserAttributes: (attr) => ({ name: attr.name, email: attr.email }),
 })
 
-export const validateCookie = async (
-  cookie: string,
-): Promise<{
+interface Resp {
   session: Session | null
   user: User | null
-}> => {
+}
+
+export const validateCookie = cache(async (cookie: string): Promise<Resp> => {
   const sessionId = lucia.readSessionCookie(cookie)
   if (!sessionId) return { session: null, user: null }
   const { session, user } = await lucia.validateSession(sessionId)
   return { session, user }
-}
+})
 
 export const auth = async (): Promise<{ session: Session | null; user: User | null }> => {
   const cookie = cookies().get(lucia.sessionCookieName)
