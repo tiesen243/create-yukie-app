@@ -11,14 +11,12 @@ import { revalidatePath } from 'next/cache'
 const Page: NextPage = async () => {
   const { user } = await auth()
 
-  const sessionCookie = cookies().get('auth_session')
-
   const action = async (fd: FormData) => {
     'use server'
     const content = String(fd.get('content'))
     const { data, error } = await api.post.create.post(
       { content },
-      { headers: { Cookie: `auth_session=${sessionCookie?.value}` } },
+      { headers: { Cookie: cookies().toString() } },
     )
     if (error) console.log(error.value)
     console.log(data)
