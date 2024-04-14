@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
-
-import { Typography } from '@/components/ui/typography'
-import { auth } from '@/server/auth'
-import { cookies } from 'next/headers'
-import { FormField } from '@/components/ui/form-field'
-import { Button } from '@/components/ui/button'
-import { api } from '@/lib/api'
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
+
+import { Button } from '@/components/ui/button'
+import { FormField } from '@/components/ui/form-field'
+import { Typography } from '@/components/ui/typography'
+import { api } from '@/lib/api'
+import { auth } from '@/server/auth'
 
 const Page: NextPage = async () => {
   const { user } = await auth()
