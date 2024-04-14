@@ -9,5 +9,5 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
 }
 
 export const config = {
-  matcher: ['/server'],
+  matcher: ['/middleware'],
 }
