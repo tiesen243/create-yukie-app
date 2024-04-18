@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.0.11",
-    "@elysiajs/swagger": "^1.0.3",
     "@lucia-auth/adapter-prisma": "^4.0.1",
     "@prisma/client": "5.12.1",
     "@radix-ui/react-label": "^2.0.2",
@@ -26,7 +25,7 @@
     "elysia": "^1.0.13",
     "lucia": "^3.1.1",
     "lucide-react": "^0.368.0",
-    "next": "^14.2.0",
+    "next": "latest",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
