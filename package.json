@@ -30,7 +30,6 @@
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.4.41",
-    "swr": "^2.2.5",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"

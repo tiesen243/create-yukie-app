@@ -1,33 +1,17 @@
-'use client'
-
-import { Loader2Icon, XIcon } from 'lucide-react'
-
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { usePost } from '@/lib/hooks'
-import { Button } from '@/components/ui/button'
+import { api } from '@/lib/api'
+import { DeletePost } from './delete-post'
 
-export const PostList: React.FC<{ user?: string }> = ({ user }) => {
-  const { posts, isLoading, getError, del } = usePost()
+export const PostList: React.FC<{ user?: string }> = async ({ user }) => {
+  const { data, error } = await api.post.getAll.get()
 
-  if (isLoading) return <Loader2Icon className="mx-auto animate-spin" />
-  if (getError || !posts)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    return <p className="text-center text-destructive">Error: {getError?.message}</p>
+  if (error) return <p className="text-destructive">{error.value.message}</p>
 
   return (
     <section className="mx-auto mb-4 max-w-screen-md space-y-4">
-      {posts.map((post) => (
+      {data?.map((post) => (
         <Card key={post.id}>
-          {post.author.id === user && (
-            <Button
-              onClick={() => del({ id: post.id })}
-              className="absolute right-2 top-2 z-10"
-              variant="ghost"
-              size="icon"
-            >
-              <XIcon />
-            </Button>
-          )}
+          {post.author.id === user && <DeletePost postId={post.id} />}
           <CardHeader>
             <CardDescription>{post.author.name}</CardDescription>
             <CardTitle>{post.content}</CardTitle>
