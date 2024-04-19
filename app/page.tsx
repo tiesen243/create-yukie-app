@@ -40,7 +40,7 @@ const Page: NextPage = async () => {
           </Button>
 
           <Button variant="secondary" className="gap-2 rounded-full" asChild>
-            <Link href="/server">
+            <Link href="/middleware">
               Middleware example <ExternalLinkIcon size={16} />
             </Link>
           </Button>
