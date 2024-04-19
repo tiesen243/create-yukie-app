@@ -8,5 +8,5 @@ export const middleware = (req: NextRequest) => {
 }
 
 export const config = {
-  matcher: ['/middleware'],
+  matcher: ['/ssr'],
 }
