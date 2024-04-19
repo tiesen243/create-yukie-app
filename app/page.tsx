@@ -48,7 +48,7 @@ const Page: NextPage = async () => {
       </div>
 
       {user && <CreatePost />}
-      <PostList user={user?.id} />
+      <PostList />
     </>
   )
 }

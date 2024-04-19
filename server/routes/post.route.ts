@@ -16,32 +16,27 @@ export const postRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
     return posts
   })
 
-  .guard((app) =>
-    app
-      .onBeforeHandle(async ({ session, user, error }) => {
-        if (!session || !user) return error(401, { message: 'You are not authorized' })
+  .post(
+    '/create',
+    async ({ db, body: { content }, user, error }) => {
+      if (!user) return error(401, { message: 'Unauthorized' })
+      const newPost = await db.post.create({
+        data: { content, author: { connect: { id: user?.id } } },
       })
+      if (!newPost) return error(500, { message: 'Failed to create post' })
+      return { message: 'Post created successfully' }
+    },
+    { body: 'createPost' },
+  )
 
-      .post(
-        '/create',
-        async ({ db, body: { content }, user, error }) => {
-          const newPost = await db.post.create({
-            data: { content, author: { connect: { id: user?.id } } },
-          })
-          if (!newPost) return error(500, { message: 'Failed to create post' })
-          return { message: 'Post created successfully' }
-        },
-        { body: 'createPost' },
-      )
-
-      .delete(
-        '/del',
-        async ({ db, body: { id }, error }) => {
-          const post = await db.post.findUnique({ where: { id } })
-          if (!post) return error(404, { message: 'Post not found' })
-          await db.post.delete({ where: { id } })
-          return { message: 'Post deleted successfully' }
-        },
-        { body: 'deletePost' },
-      ),
+  .delete(
+    '/del',
+    async ({ db, body: { id }, user, error }) => {
+      if (!user) return error(401, { message: 'Unauthorized' })
+      const post = await db.post.findUnique({ where: { id } })
+      if (!post) return error(404, { message: 'Post not found' })
+      await db.post.delete({ where: { id } })
+      return { message: 'Post deleted successfully' }
+    },
+    { body: 'deletePost' },
   )
