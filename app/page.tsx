@@ -38,7 +38,7 @@ const Page: NextPage = async () => {
         </Button>
       </div>
 
-      {session && session.user && <CreatePost />}
+      {session.user && <CreatePost />}
       <PostList userId={session.user?.id} />
     </>
   )

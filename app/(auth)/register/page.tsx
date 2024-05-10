@@ -15,13 +15,16 @@ const Page: NextPage = () => {
   const action = (fd: FormData) =>
     startTransition(async () => {
       const inp = Object.fromEntries(fd)
-      const { error } = await api.user['sign-up'].post({
+      const { error, data } = await api.user['sign-up'].post({
         name: String(inp.name),
         email: String(inp.email),
         password: String(inp.password),
       })
       if (error) toast.error(error.value.message)
-      else router.push('/login')
+      else {
+        router.push('/login')
+        toast.success(data.message)
+      }
     })
 
   return (
