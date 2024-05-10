@@ -29,19 +29,20 @@ const Page: NextPage = () => {
 
   return (
     <form action={action}>
-      <FormField name="name" label="Name" placeholder="Enter your name" />
-      <FormField name="email" label="Email" placeholder="Enter your email" />
-      <FormField
-        name="password"
-        label="Password"
-        type="password"
-        placeholder="Enter your password"
-      />
+      {fields.map((field) => (
+        <FormField key={field.name} {...field} disabled={isPending} />
+      ))}
       <Button className="w-full" isLoading={isPending}>
         Login
       </Button>
     </form>
   )
 }
+
+const fields = [
+  { name: 'name', label: 'Name', placeholder: 'Enter your name' },
+  { name: 'email', label: 'Email', placeholder: 'Enter your email', type: 'email' },
+  { name: 'password', label: 'Password', placeholder: 'Enter your password', type: 'password' },
+]
 
 export default Page

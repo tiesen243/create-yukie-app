@@ -25,7 +25,12 @@ export const CreatePost: React.FC = () => {
       action={action}
       className="container mb-4 flex max-w-screen-md items-center gap-4"
     >
-      <FormField name="content" placeholder="What's on your mind?" className="w-full" />
+      <FormField
+        name="content"
+        placeholder="What's on your mind?"
+        className="w-full"
+        disabled={isPending}
+      />
       <Button variant="ghost" size="icon" isLoading={isPending}>
         <SendHorizonalIcon />
       </Button>
