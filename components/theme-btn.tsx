@@ -13,7 +13,7 @@ export const ThemeBtn: React.FC = () => {
   // NOTE: Disable rendering on the server
   const [isMounted, setIsMounted] = React.useState(false)
   React.useEffect(() => setIsMounted(true), [])
-  if (!isMounted) return <Button variant="ghost" size="icon" isLoading />
+  if (!isMounted) return <Button variant="ghost" size="icon" />
 
   return (
     <Button variant="ghost" size="icon" onClick={toggleTheme}>

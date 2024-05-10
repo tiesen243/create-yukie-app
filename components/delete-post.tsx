@@ -1,25 +1,24 @@
 'use client'
 
 import { XIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
+import { revalidate } from '@/lib/revalidate'
 
-export const DeletePost: React.FC<{ postId?: string }> = ({ postId }) => {
-  const router = useRouter()
+export const DeletePost: React.FC<{ postId: string }> = ({ postId }) => {
   const handleClick = async () => {
-    await api.post.del.delete({ id: postId ?? '' })
-    router.refresh()
+    await api.post.del.delete({ id: postId })
+    revalidate('posts')
   }
   return (
     <Button
-      onClick={handleClick}
-      className="absolute right-2 top-2 z-10"
       variant="ghost"
       size="icon"
+      className="absolute right-2 top-2 z-10"
+      onClick={handleClick}
     >
-      <XIcon />
+      <XIcon size={24} />
     </Button>
   )
 }

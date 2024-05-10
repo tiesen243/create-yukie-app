@@ -1,6 +1,6 @@
 {
   "name": "next-elysia",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -21,16 +21,16 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@t3-oss/env-nextjs": "^0.9.2",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "elysia": "^1.0.13",
     "lucia": "^3.1.1",
-    "lucide-react": "^0.368.0",
+    "lucide-react": "^0.378.0",
     "next": "latest",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.4.41",
-    "tailwind-merge": "^2.2.2",
+    "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
   },

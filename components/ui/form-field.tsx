@@ -1,37 +1,29 @@
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+
 import { cn } from '@/lib/utils'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
-type FormFieldProps<T extends HTMLInputElement | HTMLTextAreaElement> = (T extends HTMLInputElement
-  ? React.InputHTMLAttributes<T>
-  : React.TextareaHTMLAttributes<T>) & {
+export interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
-  multiline?: boolean
   message?: string
+  asChild?: boolean
 }
 
-const FormField = <T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>({
-  label,
-  className,
-  message,
-  multiline = false,
-  ...props
-}: FormFieldProps<T>) => {
-  const Comp = multiline ? Textarea : Input
+const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
+  ({ label, message, className, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : Input
 
-  return (
-    <div className={cn('space-y-1', className)}>
-      {label && (
-        <Label className={message ? 'text-destructive' : ''}>
-          {label} {props.required && '(*)'}
-        </Label>
-      )}
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-      <Comp {...(props as any)} className={message ? 'border-destructive' : ''} />
-      <span className="text-sm text-destructive">{message ?? ''}</span>
-    </div>
-  )
-}
+    return (
+      <div className={cn('space-y-1', className)}>
+        {label && <Label>{label}</Label>}
+        <Comp ref={ref} className="w-full" {...props} />
+        {message && <p className="text-sm text-destructive">{message}</p>}
+      </div>
+    )
+  },
+)
+FormField.displayName = 'FormField'
 
 export { FormField }

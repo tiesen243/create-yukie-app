@@ -10,7 +10,7 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
-export const metadata: Metadata = siteConfig.meta
+export const metadata: Metadata = siteConfig.metadata
 
 const RootLayout: NextPage<React.PropsWithChildren> = ({ children }) => (
   <html lang="en" suppressHydrationWarning>

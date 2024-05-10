@@ -34,7 +34,7 @@ export const userRoute = new Elysia({ name: 'Route.User', prefix: '/user' })
       if (!user) return error(404, { message: 'User not found' })
 
       const isValid = await new Scrypt().verify(user.password, password)
-      if (!isValid) return error(401, { message: 'Invalid password' })
+      if (!isValid) return error(401, { message: 'Password is incorrect' })
 
       const session = await lucia.createSession(user.id, {})
       const sessionCookie = lucia.createSessionCookie(session.id)

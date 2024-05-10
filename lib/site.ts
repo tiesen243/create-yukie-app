@@ -5,7 +5,7 @@ export const getBaseUrl = () => {
 }
 
 export const siteConfig = {
-  meta: {
+  metadata: {
     metadataBase: new URL(getBaseUrl()),
     title: {
       default: 'Next Elysia',
