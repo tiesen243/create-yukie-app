@@ -5,9 +5,8 @@ This is a [Next.js](https://nextjs.org/) and [ElysiaJS](https://elysia.com) proj
 1. [Next.js](https://nextjs.org/) - React Framework.
 2. [ElysiaJS](https://elysiajs.com) - API Framework.
 3. [Lucia](https://lucia-auth.com) - Authentication library.
-4. [Prisma](https://www.prisma.io/) - Database Toolkit.
-5. [SWR](https://swr.vercel.app/) - React Hooks library for data fetching.
-6. [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+4. [Prisma](https://www.prisma.io/) - Database ORM.
+5. [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
 
 ## Getting Started
 
@@ -22,13 +21,13 @@ Then, run the following commands to create the database and run the migrations:
 
 ```bash
 # Elysia only runs on Bun
+bun db:push
 bun dev
 ```
 
-If you want to add more environment variables, you can add them to the `.env.local` file and remember to config in `env.mjs`:
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-And open [http://localhost:3000/api/elysia/docs](http://localhost:3000/api/elysia/docs) to see the API documentation.
+
+If you want to add more environment variables, you can add them to the `.env.local` file and remember to add it in `env.mjs`.
 
 ## Learn More
 
