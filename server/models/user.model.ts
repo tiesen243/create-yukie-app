@@ -8,8 +8,9 @@ const signUp = t.Object({
     error:
       'Password must contain at least 8 characters, including at least one letter and one number and special character',
   }),
+  confirmPassword: t.String(),
 })
 
-const signIn = t.Omit(signUp, ['name'])
+const signIn = t.Omit(signUp, ['name', 'confirmPassword'])
 
 export const userModel = new Elysia({ name: 'Model.User' }).model({ signUp, signIn })

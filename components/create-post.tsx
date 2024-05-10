@@ -1,8 +1,8 @@
 'use client'
 
+import { SendHorizonalIcon } from 'lucide-react'
 import { useRef, useTransition } from 'react'
 import { toast } from 'sonner'
-import { SendHorizonalIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
