@@ -9,15 +9,16 @@ generator client {
 }
 
 datasource db {
-  provider  = "mongodb"
-  url       = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String @id @default(uuid()) @db.Uuid
   email    String @unique
-  name     String
-  password String
+  name     String @db.VarChar(255)
+  password String @db.VarChar(255)
 
   sessions Session[]
   posts    Post[]
@@ -26,18 +27,18 @@ model User {
 }
 
 model Session {
-  id        String   @id @map("_id")
-  expiresAt DateTime
+  id        String   @id @default(uuid()) @db.Uuid
+  expiresAt DateTime @db.Date
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-  userId    String   @db.ObjectId
+  userId    String   @db.Uuid
 }
 
 model Post {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  content String
+  id      String @id @default(uuid()) @db.Uuid
+  content String @db.Text
 
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId String @db.ObjectId
+  authorId String @db.Uuid
 
   createdAt DateTime @default(now())
 }
