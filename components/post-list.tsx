@@ -3,7 +3,7 @@ import { api } from '@/lib/api'
 import { DeletePost } from './delete-post'
 
 export const PostList: React.FC<{ userId?: string }> = async ({ userId }) => {
-  const { data, error } = await api.post.getAll.get({ fetch: { next: { tags: ['posts'] } } })
+  const { data, error } = await api.post['get-all'].get({ fetch: { next: { tags: ['posts'] } } })
 
   if (error) return <div>{error.value.message ?? 'Unknow error'}</div>
 

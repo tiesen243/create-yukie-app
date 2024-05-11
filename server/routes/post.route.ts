@@ -7,7 +7,7 @@ export const postRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
   .use(context)
   .use(postModel)
 
-  .get('/getAll', async ({ db, error }) => {
+  .get('/get-all', async ({ db, error }) => {
     const posts = await db.post.findMany({
       include: { author: { select: { id: true, name: true } } },
       orderBy: { createdAt: 'desc' },
@@ -17,7 +17,7 @@ export const postRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
   })
 
   .post(
-    '/create',
+    '/create-post',
     async ({ db, body: { content }, user, error }) => {
       if (!user) return error(401, { message: 'Unauthorized' })
       const newPost = await db.post.create({
@@ -30,7 +30,7 @@ export const postRoute = new Elysia({ name: 'Route.Post', prefix: '/post' })
   )
 
   .delete(
-    '/del',
+    '/delete-post',
     async ({ db, body: { id }, user, error }) => {
       if (!user) return error(401, { message: 'Unauthorized' })
       const post = await db.post.findUnique({ where: { id } })

@@ -16,6 +16,7 @@
   "dependencies": {
     "@elysiajs/cron": "^1.0.3",
     "@elysiajs/eden": "^1.0.11",
+    "@hookform/resolvers": "^3.3.4",
     "@lucia-auth/adapter-prisma": "^4.0.1",
     "@prisma/client": "5.12.1",
     "@radix-ui/react-label": "^2.0.2",
@@ -30,10 +31,11 @@
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.4",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/eslint": "^8.56.7",

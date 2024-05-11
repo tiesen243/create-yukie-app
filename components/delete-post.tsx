@@ -8,7 +8,7 @@ import { revalidate } from '@/lib/revalidate'
 
 export const DeletePost: React.FC<{ postId: string }> = ({ postId }) => {
   const handleClick = async () => {
-    await api.post.del.delete({ id: postId })
+    await api.post['delete-post'].delete({ id: postId })
     revalidate('posts')
   }
   return (
