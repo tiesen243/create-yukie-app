@@ -1,17 +1,11 @@
-import * as LabelPrimitive from '@radix-ui/react-label'
+import type * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
-import {
-  Controller,
-  ControllerProps,
-  FieldPath,
-  FieldValues,
-  FormProvider,
-  useFormContext,
-} from 'react-hook-form'
+import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form'
+import { Controller, FormProvider, useFormContext } from 'react-hook-form'
 
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 
 const Form = FormProvider
@@ -156,9 +150,9 @@ const FormMessage = React.forwardRef<
 })
 FormMessage.displayName = 'FormMessage'
 
-interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string
-  control: any
+  control: ControllerProps['control']
   label?: string
   description?: string
   asChild?: boolean
@@ -169,7 +163,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     message?: string
   }
 }
-const TextField: React.FC<TextFieldProps> = ({
+const TextField: React.FC<FieldProps> = ({
   name,
   control,
   label = '',
@@ -200,7 +194,34 @@ const TextField: React.FC<TextFieldProps> = ({
   )
 }
 
+const FileField: React.FC<FieldProps> = ({ name, control, label, ...props }) => (
+  <FormField
+    control={control}
+    name={name}
+    render={({ field: { onChange, value: _, ...field } }) => {
+      return (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <Input
+              type="file"
+              onChange={(event) => {
+                if (!event.target.files) return
+                onChange(event.target.files[0])
+              }}
+              {...field}
+              {...props}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )
+    }}
+  />
+)
+
 export {
+  FileField,
   Form,
   FormControl,
   FormDescription,
