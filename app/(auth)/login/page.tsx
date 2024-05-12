@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -19,20 +18,18 @@ const schema = z.object({
 
 const Page: NextPage = () => {
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })
-  const handleSubmit = form.handleSubmit((formData: z.infer<typeof schema>) =>
-    startTransition(async () => {
-      const { data, error } = await api.user['sign-in'].post(formData)
-      if (error) {
-        toast.error(error.value.message)
-        return
-      }
-      toast.success(data.message)
-      router.push('/')
-      router.refresh()
-    }),
-  )
+  const handleSubmit = form.handleSubmit(async (formData: z.infer<typeof schema>) => {
+    const { data, error } = await api.user['sign-in'].post(formData)
+    if (error) {
+      toast.error(error.value.message)
+      return
+    }
+    toast.success(data.message)
+    router.push('/')
+    router.refresh()
+  })
+  const isPending = form.formState.isSubmitting
 
   return (
     <Form {...form}>
