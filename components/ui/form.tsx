@@ -152,7 +152,7 @@ FormMessage.displayName = 'FormMessage'
 
 interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string
-  control: ControllerProps['control']
+  control: ControllerProps['defaultValue']
   label?: string
   description?: string
   asChild?: boolean
