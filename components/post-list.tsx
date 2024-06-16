@@ -1,25 +1,36 @@
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+'use client'
+
+import { useQuery } from '@tanstack/react-query'
+
 import { api } from '@/lib/api'
 import { DeletePost } from './delete-post'
 
-export const PostList: React.FC<{ userId?: string }> = async ({ userId }) => {
-  const { data, error } = await api.post['get-all'].get({ fetch: { next: { tags: ['posts'] } } })
+export const PostList: React.FC<{ userId?: string }> = ({ userId }) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['posts'],
+    queryFn: async () => {
+      const { data, error } = await api.post['get-all'].get()
+      if (error) throw error.value
+      return data
+    },
+  })
 
-  if (error) return <div>{error.value.message ?? 'Unknow error'}</div>
+  if (isLoading || !data) return <p>Loading...</p>
 
   return (
-    <div className="container mb-4 max-w-screen-md space-y-4">
+    <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {data.map((post) => (
-        <Card key={post.id}>
-          {userId === post.author.id && <DeletePost postId={post.id} />}
-          <CardHeader>
-            <CardDescription>{post.author.name}</CardDescription>
-          </CardHeader>
-          <CardFooter>
-            <CardTitle>{post.content}</CardTitle>
-          </CardFooter>
-        </Card>
+        <li key={post.id} className="space-y-4 rounded-md border p-6 shadow-lg">
+          <div>
+            <h3 className="line-clamp-1 text-2xl font-bold">{post.title}</h3>
+            <p className="text-sm text-muted-foreground">{post.author.name}</p>
+          </div>
+
+          <p className="line-clamp-1 break-all">{post.content}</p>
+
+          {userId === post.author.id && <DeletePost id={post.id} />}
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }

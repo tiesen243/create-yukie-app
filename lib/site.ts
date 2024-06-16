@@ -1,21 +1,34 @@
-export const getBaseUrl = () => {
-  if (typeof window !== 'undefined') return window.location.origin
-  if (process.env.VERCEL_URL) return `https://next-elysia.vercel.app`
-  return `http://localhost:${process.env.PORT ?? 3000}`
+import { env } from '@/env'
+import type { Metadata, Viewport } from 'next'
+
+export type SiteConfig = {
+  meta: Metadata
+  viewport: Viewport
 }
 
-export const siteConfig = {
-  metadata: {
+export const getBaseUrl = () => {
+  if (typeof window !== 'undefined') return window.location.origin
+  if (env.NEXT_PUBLIC_APP_URL) return `https://${env.NEXT_PUBLIC_APP_URL}`
+  return 'http://localhost:3000'
+}
+
+export const siteConfig: SiteConfig = {
+  meta: {
     metadataBase: new URL(getBaseUrl()),
-    title: {
-      default: 'Next Elysia',
-      template: '%s | Next Elysia',
-    },
-    description: 'Get started with Next.js and Elysia',
-    keywords: ['next.js', 'elysiajs', 'typescript', 'tailwindcss'],
-    openGraph: { images: '/og', url: getBaseUrl() },
-    twitter: { card: 'summary_large_image', images: '/og' },
-    icons: { icon: '/favicon.ico' },
-    alternates: { canonical: getBaseUrl() },
+    title: 'Next.js Elysia',
+    applicationName: 'Next.js Elysia',
+    description: 'Next.js Elysia Starter Template with TypeScript, Tailwind CSS',
+    openGraph: { images: ['/og'] },
+    icons: [{ rel: 'icon', url: '/favicon.ico' }],
+  },
+  viewport: {
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: 'hsl(0 0% 100%)' },
+      { media: '(prefers-color-scheme: dark)', color: 'hsl(240 10% 3.9%)' },
+    ],
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
   },
 }

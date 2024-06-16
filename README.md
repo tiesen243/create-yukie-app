@@ -1,38 +1,29 @@
-This is a [Next.js](https://nextjs.org/) and [ElysiaJS](https://elysia.com) project.
+# Create T3 App
 
-## Tech Stack
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-1. [Next.js](https://nextjs.org/) - React Framework.
-2. [ElysiaJS](https://elysiajs.com) - API Framework.
-3. [Lucia](https://lucia-auth.com) - Authentication library.
-4. [Prisma](https://www.prisma.io/) - Database ORM.
-5. [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+## What's next? How do I make an app with this?
 
-## Getting Started
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-First, add the following to your `.env` file:
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-```bash
-# .env.local
-DATABASE_URL=""
-```
-
-Then, run the following commands to create the database and run the migrations:
-
-```bash
-# Elysia only runs on Bun
-bun db:push
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-If you want to add more environment variables, you can add them to the `.env.local` file and remember to add it in `env.mjs`.
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Drizzle](https://orm.drizzle.team)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-- [Documentation](https://tiesen.id.vn/blog/next-elysia) - my blog post about this project.
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Elysia Documentation](https://elysiajs.com) - learn about Elysia features and API.
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+
+## How do I deploy this?
+
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.

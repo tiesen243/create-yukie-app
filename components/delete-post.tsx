@@ -1,24 +1,23 @@
 'use client'
 
-import { XIcon } from 'lucide-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
-import { revalidate } from '@/lib/revalidate'
 
-export const DeletePost: React.FC<{ postId: string }> = ({ postId }) => {
-  const handleClick = async () => {
-    await api.post['delete-post'].delete({ id: postId })
-    revalidate('posts')
-  }
+export const DeletePost: React.FC<{ id: string }> = ({ id }) => {
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (_: FormData) => {
+      await api.post.del.delete({ id })
+      await queryClient.invalidateQueries({ queryKey: ['posts'] })
+    },
+  })
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="absolute right-2 top-2 z-10"
-      onClick={handleClick}
-    >
-      <XIcon size={24} />
-    </Button>
+    <form action={mutate}>
+      <Button variant="destructive" className="w-full" isLoading={isPending}>
+        Delete
+      </Button>
+    </form>
   )
 }

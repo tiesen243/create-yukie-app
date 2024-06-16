@@ -1,44 +1,40 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   email    String @unique
-  name     String @db.VarChar(255)
-  password String @db.VarChar(255)
+  name     String @db.String
+  password String @db.String
 
   sessions Session[]
   posts    Post[]
-
-  createdAt DateTime @default(now())
 }
 
 model Session {
-  id        String   @id @default(uuid())
-  expiresAt DateTime @db.Date
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-  userId    String
+  id        String   @id @map("_id")
+  expiresAt DateTime
+
+  user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId String @db.ObjectId
 }
 
 model Post {
-  id      String @id @default(uuid())
-  content String @db.Text
-
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId String
-
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String   @db.String
+  content   String   @db.String
   createdAt DateTime @default(now())
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
 }
