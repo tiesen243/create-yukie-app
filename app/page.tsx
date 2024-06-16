@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 
 import { CreatePost } from '@/components/create-post'
 import { PostList } from '@/components/post-list'
 import { auth } from '@/server/auth'
-import Link from 'next/link'
 
 const Page: NextPage = async () => {
   const { user } = await auth()
