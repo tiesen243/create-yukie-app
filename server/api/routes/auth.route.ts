@@ -7,6 +7,10 @@ import { lucia } from '@/server/auth/lucia'
 
 export const authRoute = createElysia({ prefix: '/auth', name: 'auth.route' })
   .use(authModel)
+  .get('/', async ({ session, user }) => {
+    const isAuthed = !!user && !!session
+    return { user: { ...user, password: undefined }, session, isAuthed }
+  })
   .post(
     '/register',
     async ({ body, db, error }) => {
@@ -39,7 +43,10 @@ export const authRoute = createElysia({ prefix: '/auth', name: 'auth.route' })
     },
     { body: 'login' },
   )
-  .post('/logout', async () => {
+  .post('/logout', async ({ session, error }) => {
+    if (!session) return error('Unauthorized', { message: 'User not logged in' })
+    await lucia.invalidateSession(session.id)
+
     const sessionCookie = lucia.createBlankSessionCookie()
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
 

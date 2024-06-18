@@ -26,10 +26,11 @@ export const createElysia = <P extends string, S extends boolean>(c?: ElysiaConf
       }
     })
     .derive({ as: 'global' }, async () => {
-      const { user } = await uncachedAuth()
+      const { user, session } = await uncachedAuth()
 
       return {
         db,
         user,
+        session,
       }
     })

@@ -4,8 +4,10 @@ import { useQuery } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 import { DeletePost } from './delete-post'
+import { useAuth } from '@/lib/auth'
 
-export const PostList: React.FC<{ userId?: string }> = ({ userId }) => {
+export const PostList: React.FC = () => {
+  const { user } = useAuth()
   const { data, isLoading } = useQuery({
     queryKey: ['posts'],
     queryFn: async () => {
@@ -28,7 +30,7 @@ export const PostList: React.FC<{ userId?: string }> = ({ userId }) => {
 
           <p className="line-clamp-1 break-all">{post.content}</p>
 
-          {userId === post.author.id && <DeletePost id={post.id} />}
+          {user?.id === post.author.id && <DeletePost id={post.id} />}
         </li>
       ))}
     </ul>

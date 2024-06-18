@@ -7,9 +7,11 @@ import { toast } from 'sonner'
 import { FormField } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
 
 export const Form: React.FC = () => {
   const router = useRouter()
+  const { mutate: refresh } = useAuth()
   const { mutate, error, isPending } = useMutation({
     mutationFn: async (fd: FormData) => {
       const { error } = await api.auth.login.post({
@@ -19,7 +21,7 @@ export const Form: React.FC = () => {
       if (error) throw error.value
 
       router.push('/')
-      router.refresh()
+      refresh()
       toast.success('Logged in successfully')
     },
     onError: (error) => !error.fieldErrors && toast.error(error.message),

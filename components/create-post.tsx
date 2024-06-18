@@ -7,8 +7,10 @@ import { FormField } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { api } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
 
 export const CreatePost: React.FC = () => {
+  const { isAuthed } = useAuth()
   const ref = useRef<HTMLFormElement>(null)
   const queryClient = useQueryClient()
 
@@ -24,6 +26,14 @@ export const CreatePost: React.FC = () => {
       ref.current?.reset()
     },
   })
+
+  if (!isAuthed) {
+    return (
+      <p className="mb-4 text-center text-muted-foreground">
+        You must be logged in to create a post
+      </p>
+    )
+  }
 
   return (
     <form ref={ref} action={mutate} className="mb-4 space-y-4">
