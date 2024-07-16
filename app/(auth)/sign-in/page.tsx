@@ -1,11 +1,9 @@
 import type { NextPage } from 'next'
 
+import { SigninForm } from './_form'
+
 const Page: NextPage = () => {
-  return (
-    <div>
-      <h1>Page</h1>
-    </div>
-  )
+  return <SigninForm />
 }
 
 export default Page

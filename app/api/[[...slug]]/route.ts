@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server'
 
-import { appRouter } from '@/server/api/root'
+import { appRouter } from '@/server/root'
 
 const handler = (req: NextRequest) => appRouter.fetch(req)
 

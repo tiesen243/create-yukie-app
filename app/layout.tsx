@@ -1,10 +1,11 @@
+import './globals.css'
+
 import { Inter } from 'next/font/google'
 
 import { Header } from '@/components/header'
 import { Provider } from '@/components/provider'
 import { Toaster } from '@/components/ui/sonner'
 import { siteConfig } from '@/lib/site'
-import './globals.css'
 
 export const metadata = siteConfig.meta
 export const viewport = siteConfig.viewport

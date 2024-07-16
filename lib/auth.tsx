@@ -1,5 +1,3 @@
-'use client'
-
 import type { Session, User } from '@prisma/client'
 import { createContext, use, useEffect, useState } from 'react'
 
@@ -28,10 +26,13 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const [state, setState] = useState<Auth>(initialState)
 
   const mutate = async () => {
-    const res = await fetch('/api/auth', { next: { tags: ['auth'] } })
-    const payload = (await res.json()) as Auth
-
-    setState(payload)
+    try {
+      const res = await fetch('/api/auth/me', { next: { tags: ['auth'] } })
+      const payload = (await res.json()) as Auth
+      setState(payload)
+    } catch {
+      setState(initialState)
+    }
   }
 
   useEffect(() => {

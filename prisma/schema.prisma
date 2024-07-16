@@ -6,35 +6,34 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String @id @default(uuid()) @db.Uuid
   email    String @unique
-  name     String @db.String
-  password String @db.String
+  name     String @db.Text
+  password String @db.Text
 
   sessions Session[]
   posts    Post[]
 }
 
 model Session {
-  id        String   @id @map("_id")
+  id        String   @id
   expiresAt DateTime
 
   user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
-  userId String @db.ObjectId
+  userId String @db.Uuid
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String   @db.String
-  content   String   @db.String
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String   @db.Text
+  content   String   @db.Text
   createdAt DateTime @default(now())
 
   author   User   @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId
+  authorId String @db.Uuid
 }
