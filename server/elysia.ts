@@ -24,11 +24,3 @@ export const createContext = new Elysia()
 
 export const createElysia = <P extends string, S extends boolean>(c?: ElysiaConfig<P, S>) =>
   new Elysia(c).use(createContext)
-
-export const authGuard = createElysia()
-  .onBeforeHandle(({ user, session, error }) => {
-    if (!session || !user)
-      return error('Unauthorized', 'You must be logged in to access this page.')
-    return { session, user }
-  })
-  .as('plugin')

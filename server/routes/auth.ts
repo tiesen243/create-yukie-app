@@ -10,7 +10,7 @@ export const authRouter = createElysia({ prefix: '/auth' })
 
   .get('/me', async ({ user, session }) => {
     const isAuthed = user && session
-    return { user, session, isAuthed }
+    return { user: { ...user, password: undefined }, session, isAuthed }
   })
 
   .post(

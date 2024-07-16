@@ -30,7 +30,6 @@ model Session {
 
 model Post {
   id        String   @id @default(uuid()) @db.Uuid
-  title     String   @db.Text
   content   String   @db.Text
   createdAt DateTime @default(now())
 
