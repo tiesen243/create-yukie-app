@@ -1,7 +1,7 @@
 import { createElysia } from '@/server/elysia'
 
-import { authRouter } from '@/server/routes/auth'
-import { postRouter } from './routes/post'
+import { authRouter } from '@/server/routers/auth'
+import { postRouter } from '@/server/routers/post'
 
 export const appRouter = createElysia({ prefix: '/api' }).use(authRouter).use(postRouter).compile()
 
