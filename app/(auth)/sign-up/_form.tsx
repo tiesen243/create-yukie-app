@@ -17,7 +17,7 @@ export const SignupForm: React.FC = () => {
       const res = await api.auth.signup.post(parsed.data)
       if (res.error) throw res.error
     },
-    onSuccess: () => router.push('/'),
+    onSuccess: () => router.push('/sign-in'),
   })
 
   return (
@@ -30,6 +30,7 @@ export const SignupForm: React.FC = () => {
       <small>
         Already have an account?{' '}
         <button
+          type="button"
           onClick={() => router.push('/sign-in')}
           className="underline-offset-4 hover:underline"
         >

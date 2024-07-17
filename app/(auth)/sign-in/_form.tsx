@@ -33,7 +33,8 @@ export const SigninForm: React.FC = () => {
       <small>
         Don&apos;t have an account?{' '}
         <button
-          onClick={() => router.push('/sign-in')}
+          type="button"
+          onClick={() => router.push('/sign-up')}
           className="underline-offset-4 hover:underline"
         >
           Sign up

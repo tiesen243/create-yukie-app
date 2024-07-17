@@ -6,20 +6,28 @@ import { z } from 'zod'
 
 import { FormField } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
-import { revalidate } from '@/server/actions'
 import { api } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
+import { revalidate } from '@/server/actions'
+import { useRef } from 'react'
 
 export const CreatePostForm: React.FC = () => {
+  const { isAuthed } = useAuth()
+  const formRef = useRef<HTMLFormElement>(null)
   const { mutate, isPending } = useMutation({
     mutationFn: async (formData: FormData) => {
       const parsed = schema.safeParse(Object.fromEntries(formData))
       if (!parsed.success) throw parsed.error.flatten().fieldErrors
       await api.post.create.post(parsed.data)
       revalidate({ tag: 'posts' })
+      formRef.current?.reset()
     },
   })
+
+  if (!isAuthed) return null
+
   return (
-    <form action={mutate} className="flex gap-2">
+    <form action={mutate} ref={formRef} className="flex gap-2">
       <FormField
         name="content"
         placeholder="What are you thinking?"

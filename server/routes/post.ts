@@ -29,3 +29,17 @@ export const postRouter = createElysia({ prefix: '/post' })
     },
     { body: 'createPostSchema' },
   )
+
+  .delete('/deletePost/:id', async ({ user, db, params, error }) => {
+    if (!user) return error('Unauthorized', 'You must be logged in to delete a post.')
+
+    const post = await db.post.findUnique({ where: { id: params.id } })
+    if (!post) return error('Not Found', 'Post not found.')
+
+    if (post.authorId !== user.id)
+      return error('Forbidden', 'You do not have permission to delete this post.')
+
+    await db.post.delete({ where: { id: params.id } })
+
+    return { message: 'Post deleted successfully.' }
+  })

@@ -24,7 +24,8 @@ export const authRouter = createElysia({ prefix: '/auth' })
 
       const user = await db.user.create({
         data: {
-          ...body,
+          name: body.name,
+          email: body.email,
           password: await new Scrypt().hash(body.password),
         },
       })
