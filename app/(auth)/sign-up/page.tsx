@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-import { SignupForm } from './_form'
+import { SignupForm } from '@/components/auth/signup-form'
 
 const Page: NextPage = () => {
   return <SignupForm />

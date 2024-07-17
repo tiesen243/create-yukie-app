@@ -27,7 +27,7 @@ export const CreatePostForm: React.FC = () => {
   if (!isAuthed) return null
 
   return (
-    <form action={mutate} ref={formRef} className="flex gap-2">
+    <form action={mutate} ref={formRef} className="container flex max-w-screen-md gap-2">
       <FormField
         name="content"
         placeholder="What are you thinking?"

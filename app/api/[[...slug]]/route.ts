@@ -1,7 +1,5 @@
-import type { NextRequest } from 'next/server'
-
 import { appRouter } from '@/server/root'
 
-const handler = (req: NextRequest) => appRouter.fetch(req)
+const handler = appRouter.handle
 
 export { handler as GET, handler as POST, handler as PATCH, handler as DELETE }

@@ -13,16 +13,24 @@ interface Post {
 }
 
 const Page: NextPage = async () => {
-  const posts = (await api.post.getPosts
-    .get({ fetch: { next: { tags: ['posts'] } } })
-    .then((res) => res.data)) as Post[]
+  const { data: posts } = (await api.post.getPosts.get({
+    fetch: { next: { tags: ['posts'] } },
+  })) as { data: Post[] }
 
   return (
     <>
+      <article className="mb-40 mt-80 space-y-8">
+        <h1 className="text-center text-3xl font-bold">
+          Next.js + ElysiaJS + Prisma + TailwindCSS Template
+        </h1>
+
+        <p className="text-center text-muted-foreground">Login to create a post</p>
+      </article>
+
       <CreatePostForm />
 
-      <section className="my-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {posts.map((post) => (
+      <section className="container my-4 grid max-w-screen-md grid-cols-1 gap-4 md:grid-cols-2">
+        {posts?.map((post) => (
           <article key={post.id} className="rounded-md border p-4">
             <p className="text-xl font-bold">{post.content}</p>
             <small className="text-muted-foreground">by {post.author.name}</small>
