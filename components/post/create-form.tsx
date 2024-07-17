@@ -2,14 +2,14 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { SendHorizonalIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { z } from 'zod'
 
 import { FormField } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
-import { api } from '@/lib/api'
-import { useAuth } from '@/lib/auth'
 import { revalidate } from '@/server/actions'
-import { useRef } from 'react'
+import { useAuth } from '@/lib/auth'
+import { api } from '@/lib/api'
 
 export const CreatePostForm: React.FC = () => {
   const { isAuthed } = useAuth()
