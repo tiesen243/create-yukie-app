@@ -18,8 +18,8 @@ export const siteConfig: SiteConfig = {
     title: 'Next.js Elysia',
     applicationName: 'Next.js Elysia',
     description: 'Next.js Elysia Starter Template with TypeScript, Tailwind CSS',
-    openGraph: { images: ['/og'] },
-    icons: [{ rel: 'icon', url: '/favicon.ico' }],
+    openGraph: { images: '/og' },
+    icons: { icon: '/favicon.ico' },
   },
   viewport: {
     themeColor: [
