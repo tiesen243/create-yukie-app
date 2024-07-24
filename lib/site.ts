@@ -1,15 +1,16 @@
-import { env } from '@/env'
 import type { Metadata, Viewport } from 'next'
+
+export const getBaseUrl = () => {
+  if (typeof window !== 'undefined') return window.location.origin
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return `http://localhost:${process.env.PORT ?? 3000}`
+}
 
 export type SiteConfig = {
   meta: Metadata
   viewport: Viewport
-}
-
-export const getBaseUrl = () => {
-  if (typeof window !== 'undefined') return window.location.origin
-  if (env.NEXT_PUBLIC_APP_URL) return `https://${env.NEXT_PUBLIC_APP_URL}`
-  return `http://localhost:${process.env.PORT ?? 3000}`
 }
 
 export const siteConfig: SiteConfig = {
