@@ -1,21 +1,14 @@
+import type { Post, User } from '@prisma/client'
 import type { NextPage } from 'next'
 
 import { CreatePostForm } from '@/components/post/create-form'
 import { DeleteBtn } from '@/components/post/delete-btn'
 import { api } from '@/lib/api'
 
-interface Post {
-  id: string
-  content: string
-  author: {
-    name: string
-  }
-}
+type TPost = Post & { author: User }
 
 const Page: NextPage = async () => {
-  const { data: posts } = (await api.post.getPosts.get({
-    fetch: { next: { tags: ['posts'] } },
-  })) as { data: Post[] }
+  const posts = await api.post.getPosts.get().then((res) => res.data as TPost[])
 
   return (
     <>
@@ -29,15 +22,15 @@ const Page: NextPage = async () => {
 
       <CreatePostForm />
 
-      <section className="container my-4 grid max-w-screen-md grid-cols-1 gap-4 md:grid-cols-2">
-        {posts?.map((post) => (
-          <article key={post.id} className="rounded-md border p-4">
-            <p className="text-xl font-bold">{post.content}</p>
-            <small className="text-muted-foreground">by {post.author.name}</small>
-            <DeleteBtn id={post.id} />
-          </article>
+      <ul className="mx-auto mt-4 grid max-w-screen-md grid-cols-3 gap-4">
+        {posts.map((post) => (
+          <li key={post.id} className="flex items-center justify-between rounded-lg border p-4">
+            <p>{post.content}</p>
+
+            <DeleteBtn id={post.id} uid={post.author.id} />
+          </li>
         ))}
-      </section>
+      </ul>
     </>
   )
 }

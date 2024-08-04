@@ -1,4 +1,4 @@
-import { appRouter } from '@/server/root'
+import { appRouter } from '@/server/api/root'
 
 const handler = appRouter.handle
 

@@ -5,20 +5,20 @@ import { XIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
 import { revalidate } from '@/server/actions'
-import { useAuth } from '@/lib/auth'
+import { useSession } from '@/lib/session'
 
-export const DeleteBtn: React.FC<{ id: string }> = ({ id }) => {
-  const { isAuthed } = useAuth()
+export const DeleteBtn: React.FC<{ id: string; uid: string }> = ({ id, uid }) => {
+  const { isAuthed, user } = useSession()
+  if (!isAuthed) return null
+  if (user.id !== uid) return null
 
   const handleDelete = async () => {
     await api.post.deletePost({ id }).delete()
-    revalidate({ tag: 'posts' })
+    revalidate({ path: '/' })
   }
 
-  if (!isAuthed) return null
-
   return (
-    <Button variant="ghost" size="icon" onClick={handleDelete} className="absolute right-2 top-2">
+    <Button variant="ghost" size="icon" onClick={handleDelete}>
       <XIcon />
     </Button>
   )

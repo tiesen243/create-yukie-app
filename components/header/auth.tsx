@@ -1,28 +1,27 @@
-'use client'
-
+import { auth } from '@/server/auth'
 import Link from 'next/link'
+import { LogoutBtn } from './logout-btn'
 
-import { api } from '@/lib/api'
-import { useAuth } from '@/lib/auth'
-import { LogOutIcon } from 'lucide-react'
+export const Auth: React.FC = async () => {
+  const { user } = await auth()
 
-export const Auth: React.FC = () => {
-  const { session, user, mutate } = useAuth()
-
-  if (!session || !user) return <Link href="/sign-in">Login</Link>
-
-  const handleLogout = async () => {
-    await api.auth.signout.post()
-    mutate()
-  }
+  if (!user)
+    return (
+      <div className="flex items-center gap-2">
+        <Link href="/sign-up" className="hover:underline">
+          Sign up
+        </Link>
+        |
+        <Link href="/sign-in" className="hover:underline">
+          Sign in
+        </Link>
+      </div>
+    )
 
   return (
-    <>
-      <p className="mr-2 text-lg">Welcome, {user.name}</p>
-
-      <button onClick={handleLogout}>
-        <LogOutIcon />
-      </button>
-    </>
+    <div className="flex items-center gap-2">
+      <p className="text-lg font-semibold">{user.name}</p>
+      <LogoutBtn />
+    </div>
   )
 }

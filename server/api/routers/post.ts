@@ -1,5 +1,5 @@
-import { createElysia } from '../elysia'
-import { postSchema } from '../validates/post'
+import { createElysia } from '@/server/api/elysia'
+import { postSchema } from '@/server/api/validates/post'
 
 export const postRouter = createElysia({ prefix: '/post' })
   .use(postSchema)

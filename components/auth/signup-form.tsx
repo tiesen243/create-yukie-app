@@ -1,46 +1,43 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { FormField } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
+import { Form, FormField } from '@/components/ui/form'
 import { api } from '@/lib/api'
 
 export const SignupForm: React.FC = () => {
   const router = useRouter()
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: async (formData: FormData) => {
-      const parsed = schema.safeParse(Object.fromEntries(formData))
-      if (!parsed.success) throw parsed.error.flatten().fieldErrors
-      const res = await api.auth.signup.post(parsed.data)
-      if (res.error) throw res.error
-    },
-    onSuccess: () => router.push('/sign-in'),
+  const form = useForm<FormValues>({ resolver })
+
+  const handleSubmit = form.handleSubmit(async ({ confirmPassword: _, ...data }) => {
+    const res = await api.auth.signup.post(data)
+    if (res.error)
+      return toast.error('Failed to create account', {
+        description: res.error.value,
+      })
+
+    toast.success('Account created!')
+    router.push('/sign-in')
   })
 
   return (
-    <form action={mutate} className="space-y-4">
+    <Form onSubmit={handleSubmit}>
       {fields.map((field) => (
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        <FormField key={field.name} {...field} error={error?.[field.name]} disabled={isPending} />
+        <FormField
+          {...field}
+          key={field.name}
+          register={form.register}
+          error={form.formState.errors[field.name]}
+        />
       ))}
 
-      <small>
-        Already have an account?{' '}
-        <button
-          type="button"
-          onClick={() => router.push('/sign-in')}
-          className="underline-offset-4 hover:underline"
-        >
-          Sign in
-        </button>
-      </small>
-      <Button className="w-full" isLoading={isPending}>
-        Register
-      </Button>
-    </form>
+      <Button isLoading={form.formState.isSubmitting}>Register</Button>
+    </Form>
   )
 }
 
@@ -61,9 +58,13 @@ const schema = z
     message: 'Passwords do not match',
   })
 
+type FormValues = z.infer<typeof schema>
+
+const resolver = zodResolver(schema)
+
 const fields = [
-  { label: 'Name', name: 'name', type: 'text', placeholder: 'John Doe' },
-  { label: 'Email', name: 'email', type: 'email', placeholder: 'yuki@tiesen.id.vn' },
-  { label: 'Password', name: 'password', type: 'password', placeholder: '********' },
-  { label: 'Confirm Password', name: 'confirmPassword', type: 'password', placeholder: '********' },
+  { name: 'name' as const, label: 'Name', type: 'text' },
+  { name: 'email' as const, label: 'Email', type: 'email' },
+  { name: 'password' as const, label: 'Password', type: 'password' },
+  { name: 'confirmPassword' as const, label: 'Confirm Password', type: 'password' },
 ]

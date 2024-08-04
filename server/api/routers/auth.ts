@@ -1,24 +1,16 @@
 import { Scrypt } from 'lucia'
 import { cookies } from 'next/headers'
 
+import { createElysia } from '@/server/api/elysia'
+import { authSchema } from '@/server/api/validates/auth'
 import { lucia } from '@/server/auth/lucia'
-import { createElysia } from '@/server/elysia'
-import { authSchema } from '../validates/auth'
 
 export const authRouter = createElysia({ prefix: '/auth' })
   .use(authSchema)
 
-  .get('/me', async ({ user, session }) => {
-    const isAuthed = user && session
-    return { user: { ...user, password: undefined }, session, isAuthed }
-  })
-
   .post(
     '/signup',
     async ({ db, body, error }) => {
-      if (body.password !== body.confirmPassword)
-        return error('Bad Request', 'Passwords do not match.')
-
       const isEmailTaken = await db.user.findUnique({ where: { email: body.email } })
       if (isEmailTaken) return error('Conflict', 'Email is already taken.')
 
@@ -31,7 +23,7 @@ export const authRouter = createElysia({ prefix: '/auth' })
       })
       if (!user) return error('Internal Server Error', 'Failed to create user.')
 
-      return { user }
+      return { success: true }
     },
     { body: 'signupSchema' },
   )
@@ -49,14 +41,15 @@ export const authRouter = createElysia({ prefix: '/auth' })
       const sessionCookie = lucia.createSessionCookie(session.id)
       cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
 
-      return { user }
+      return { success: true }
     },
     { body: 'signinSchema' },
   )
 
-  .post('/signout', async ({ session }) => {
-    if (!session) return
+  .post('/signout', async ({ session, error }) => {
+    if (!session) return error('Unauthorized', 'You must be logged in to sign out.')
     await lucia.invalidateSession(session.id)
     const sessionCookie = lucia.createBlankSessionCookie()
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
+    return { success: true }
   })

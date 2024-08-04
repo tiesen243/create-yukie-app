@@ -1,50 +1,41 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { FormField } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
+import { Form, FormField } from '@/components/ui/form'
 import { api } from '@/lib/api'
-import { useAuth } from '@/lib/auth'
 
 export const SigninForm: React.FC = () => {
   const router = useRouter()
-  const { mutate: refresh } = useAuth()
+  const form = useForm<FormValues>({ resolver })
 
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: async (formData: FormData) => {
-      const parsed = schema.safeParse(Object.fromEntries(formData))
-      if (!parsed.success) throw parsed.error.flatten().fieldErrors
-      const res = await api.auth.signin.post(parsed.data)
-      if (res.error) throw res.error
-    },
-    onSuccess: () => refresh().then(() => router.push('/')),
+  const handleSubmit = form.handleSubmit(async (data) => {
+    const res = await api.auth.signin.post(data)
+    if (res.error) return toast.error('Failed to sign in', { description: res.error.value })
+
+    toast.success('Signed in!')
+    router.push('/')
+    router.refresh()
   })
 
   return (
-    <form action={mutate} className="space-y-4">
+    <Form onSubmit={handleSubmit}>
       {fields.map((field) => (
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        <FormField key={field.name} {...field} error={error?.[field.name]} disabled={isPending} />
+        <FormField
+          {...field}
+          key={field.name}
+          register={form.register}
+          error={form.formState.errors[field.name]}
+        />
       ))}
 
-      <small>
-        Don&apos;t have an account?{' '}
-        <button
-          type="button"
-          onClick={() => router.push('/sign-up')}
-          className="underline-offset-4 hover:underline"
-        >
-          Sign up
-        </button>
-      </small>
-
-      <Button className="w-full" isLoading={isPending}>
-        Log in
-      </Button>
-    </form>
+      <Button isLoading={form.formState.isSubmitting}>Sign in</Button>
+    </Form>
   )
 }
 
@@ -57,7 +48,12 @@ const schema = z.object({
       'Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.',
     ),
 })
+
+type FormValues = z.infer<typeof schema>
+
+const resolver = zodResolver(schema)
+
 const fields = [
-  { label: 'Email', name: 'email', type: 'email', placeholder: 'yuki@tiesen.id.vn' },
-  { label: 'Password', name: 'password', type: 'password', placeholder: '********' },
+  { name: 'email' as const, label: 'Email', type: 'email', placeholder: 'yuki@tiesen.id.vn' },
+  { name: 'password' as const, label: 'Password', type: 'password', placeholder: '********' },
 ]
