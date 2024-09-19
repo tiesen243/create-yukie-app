@@ -30,6 +30,9 @@ yarn-error.log*
 .env
 .env*.local
 
+# prisma
+prisma/*.db
+
 # vercel
 .vercel
 
