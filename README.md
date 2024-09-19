@@ -1,6 +1,6 @@
-# Create Yuki App
+# Create Elynext App
 
-A Next.js template with TypeScript, Tailwind CSS, ESLint and Prettier.
+A Full-Stack Application with Next.js and ElysiaJS
 
 ## Getting Started
 
@@ -8,16 +8,16 @@ A Next.js template with TypeScript, Tailwind CSS, ESLint and Prettier.
 
 ```bash
 # using npm
-npx create-next-app@latest --example https://github.com/tiesen243/create-yuki-app
+npx create-next-app@latest --example https://github.com/tiesen243/create-elynext-app
 
 # using yarn
-yarn create next-app@latest --example https://github.com/tiesen243/create-yuki-app
+yarn create next-app@latest --example https://github.com/tiesen243/create-elynext-app
 
 # using pnpm
-pnpx create-next-app@latest --example https://github.com/tiesen243/create-yuki-app
+pnpx create-next-app@latest --example https://github.com/tiesen243/create-elynext-app
 
 # using bun
-bunx --bun create-next-app@latest --example https://github.com/tiesen243/create-yuki-app
+bunx --bun create-next-app@latest --example https://github.com/tiesen243/create-elynext-app
 ```
 
 ### Create `.env` file
@@ -30,24 +30,32 @@ cp .env.example .env
 
 ```bash
 # using npm
+npm run db:push
 npm run dev
 
 # using yarn
+yarn db:push
 yarn dev
 
 # using pnpm
+pnpm db:push
 pnpm dev
 
 # using bun
+bun db:push
 bun dev
 ```
 
 ## Features
 
-- TypeScript
-- ESLint
-- Prettier
-- Tailwind CSS
+- [Next.js](https://nextjs.org/)
+- [ElysiaJS](https://elysiajs.com/)
+- [Prisma](https://www.prisma.io/)
+- [Tanstack Query](https://tanstack.com/query/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## License
 
