@@ -12,7 +12,7 @@ const createContext = new Elysia()
   })
   .as('plugin')
 
-const timmingM = new Elysia()
+const timmingMiddleware = new Elysia()
   .state({ start: 0 })
   .onBeforeHandle(({ store }) => (store.start = Date.now()))
   .onAfterHandle(({ path, store: { start } }) =>
@@ -26,4 +26,4 @@ export const createElysia = <P extends string, S extends boolean>(options?: Elys
     aot: true,
   })
     .use(createContext)
-    .use(timmingM)
+    .use(timmingMiddleware)
