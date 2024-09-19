@@ -1,38 +1,45 @@
-import type { Post, User } from '@prisma/client'
 import type { NextPage } from 'next'
+import Image from 'next/image'
+import { Github } from 'lucide-react'
 
-import { CreatePostForm } from '@/components/post/create-form'
-import { DeleteBtn } from '@/components/post/delete-btn'
-import { api } from '@/lib/api'
+import { Button } from '@/components/ui/button'
+import { Typography } from '@/components/ui/typography'
 
-type TPost = Post & { author: User }
+const Page: NextPage = () => (
+  <main className="container flex min-h-dvh max-w-screen-lg flex-col items-center justify-center overflow-x-hidden">
+    <div className="pointer-events-none relative flex place-items-center before:absolute before:h-[700px] before:w-[140px] before:translate-x-1 before:translate-y-[-10px] before:rotate-[-32deg] before:rounded-full before:bg-gradient-to-r before:from-[#AB1D1C] before:to-[#E18317] before:opacity-30 before:blur-[100px] before:content-[''] lg:before:h-[700px] lg:before:w-[240px] lg:before:translate-x-[-100px]" />
 
-const Page: NextPage = async () => {
-  const posts = await api.post.getPosts.get().then((res) => res.data as TPost[])
+    <Image src="https://tiesen.id.vn/assets/tiesen.png" width={2500} height={400} alt="tiesen" />
 
-  return (
-    <>
-      <article className="mb-40 mt-80 space-y-8">
-        <h1 className="text-center text-3xl font-bold">
-          Next.js + ElysiaJS + Prisma + TailwindCSS Template
-        </h1>
+    <Typography level="h1" className="text-center brightness-150">
+      A Next.js template with{' '}
+      <span className="bg-[linear-gradient(135deg,#3178C6,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+        TypeScript
+      </span>
+      ,{' '}
+      <span className="bg-[linear-gradient(135deg,#06B6D4,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+        Tailwind CSS
+      </span>
+      ,{' '}
+      <span className="bg-[linear-gradient(135deg,#4B32C3,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+        ESLint
+      </span>{' '}
+      and{' '}
+      <span className="bg-[linear-gradient(135deg,#F7B93E,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+        Prettier
+      </span>
+    </Typography>
 
-        <p className="text-center text-muted-foreground">Login to create a post</p>
-      </article>
-
-      <CreatePostForm />
-
-      <ul className="mx-auto mt-4 grid max-w-screen-md grid-cols-3 gap-4">
-        {posts.map((post) => (
-          <li key={post.id} className="flex items-center justify-between rounded-lg border p-4">
-            <p>{post.content}</p>
-
-            <DeleteBtn id={post.id} uid={post.author.id} />
-          </li>
-        ))}
-      </ul>
-    </>
-  )
-}
+    <Button variant="outline" className="my-4 gap-2" asChild>
+      <a
+        href="https://github.com/tiesen243/create-yuki-app"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Github /> Github
+      </a>
+    </Button>
+  </main>
+)
 
 export default Page
