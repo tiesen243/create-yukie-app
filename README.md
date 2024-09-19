@@ -1,6 +1,6 @@
-# Create Elynext App
+# Create Yukie App
 
-A Full-Stack Application with Next.js and ElysiaJS
+A Full-Stack Application with Next.js and ElysiaJS using Prisma, Tanstack Query.
 
 ## Getting Started
 

@@ -26,6 +26,14 @@ const Page: NextPage = async () => {
         <span className="bg-[linear-gradient(135deg,#E18317,69%,hsl(var(--background)))] bg-clip-text text-transparent">
           ElysiaJS
         </span>
+        {' using '} 
+        <span className="bg-[linear-gradient(135deg,#2D3748,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+          Prisma 
+        </span>
+        {' and '} 
+        <span className="bg-[linear-gradient(135deg,#FF4154,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+          @tanstack/react-query 
+        </span>
       </Typography>
 
       <div className="mt-4 flex items-center gap-2">
