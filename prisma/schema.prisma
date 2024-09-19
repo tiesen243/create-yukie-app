@@ -10,8 +10,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String @id @default(cuid())
+  discordId String @unique
+  email     String @unique
+
+  username String
+  name     String
+  avatar   String
+
+  sessions Session[]
+  posts    Post[]
+
+  createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+
+  user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId String
+
+  @@index([userId])
+}
+
 model Post {
-  id        Int      @id @default(autoincrement())
-  content   String
+  id      Int    @id @default(autoincrement())
+  content String
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
   createdAt DateTime @default(now())
 }
