@@ -11,12 +11,7 @@ export const metadata = seo({})
 
 const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => (
   <html lang="en" suppressHydrationWarning>
-    <body
-      className={cn(
-        'min-h-dvh bg-background font-sans text-foreground antialiased',
-        GeistSans.variable,
-      )}
-    >
+    <body className={cn('min-h-dvh font-sans', GeistSans.variable)}>
       <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
         <QueryProvider>{children}</QueryProvider>
       </ThemeProvider>

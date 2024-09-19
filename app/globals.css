@@ -62,6 +62,10 @@
     @apply relative box-border border-border underline-offset-4 selection:bg-foreground selection:text-background;
   }
 
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
   /* prettier-ignore  */
   h1, h2, h3, h4, h5, h6 {
     @apply text-balance;
