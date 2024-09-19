@@ -30,7 +30,7 @@ const createContext = new Elysia()
   .as('plugin')
 
 /**
- * Middleware for timing procedure execution and adding an articifial delay in development.
+ * Middleware for timing the execution of each request.
  *
  * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
  * network latency that would occur in production but not in local development.
