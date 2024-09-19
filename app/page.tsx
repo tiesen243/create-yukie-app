@@ -1,45 +1,55 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { Github } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
+import { api } from '@/lib/api'
+import { auth } from '@/server/auth'
 
-const Page: NextPage = () => (
-  <main className="container flex min-h-dvh max-w-screen-lg flex-col items-center justify-center overflow-x-hidden">
-    <div className="pointer-events-none relative flex place-items-center before:absolute before:h-[700px] before:w-[140px] before:translate-x-1 before:translate-y-[-10px] before:rotate-[-32deg] before:rounded-full before:bg-gradient-to-r before:from-[#AB1D1C] before:to-[#E18317] before:opacity-30 before:blur-[100px] before:content-[''] lg:before:h-[700px] lg:before:w-[240px] lg:before:translate-x-[-100px]" />
+const Page: NextPage = async () => {
+  const session = await auth()
+  const post = await api.post.latestPost.get()
 
-    <Image src="https://tiesen.id.vn/assets/tiesen.png" width={2500} height={400} alt="tiesen" />
+  return (
+    <main className="container flex min-h-dvh max-w-screen-lg flex-col items-center justify-center overflow-x-hidden">
+      <div className="pointer-events-none relative flex place-items-center before:absolute before:h-[700px] before:w-[140px] before:translate-x-1 before:translate-y-[-10px] before:rotate-[-32deg] before:rounded-full before:bg-gradient-to-r before:from-[#AB1D1C] before:to-[#E18317] before:opacity-30 before:blur-[100px] before:content-[''] lg:before:h-[700px] lg:before:w-[240px] lg:before:translate-x-[-100px]" />
 
-    <Typography level="h1" className="text-center brightness-150">
-      A Next.js template with{' '}
-      <span className="bg-[linear-gradient(135deg,#3178C6,69%,hsl(var(--background)))] bg-clip-text text-transparent">
-        TypeScript
-      </span>
-      ,{' '}
-      <span className="bg-[linear-gradient(135deg,#06B6D4,69%,hsl(var(--background)))] bg-clip-text text-transparent">
-        Tailwind CSS
-      </span>
-      ,{' '}
-      <span className="bg-[linear-gradient(135deg,#4B32C3,69%,hsl(var(--background)))] bg-clip-text text-transparent">
-        ESLint
-      </span>{' '}
-      and{' '}
-      <span className="bg-[linear-gradient(135deg,#F7B93E,69%,hsl(var(--background)))] bg-clip-text text-transparent">
-        Prettier
-      </span>
-    </Typography>
+      <Image src="https://tiesen.id.vn/assets/tiesen.png" width={2500} height={400} alt="tiesen" />
 
-    <Button variant="outline" className="my-4 gap-2" asChild>
-      <a
-        href="https://github.com/tiesen243/create-yuki-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Github /> Github
-      </a>
-    </Button>
-  </main>
-)
+      <Typography level="h1" className="text-center brightness-150">
+        A Full-Stack Application with{' '}
+        <span className="bg-[linear-gradient(135deg,#AB1D1C,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+          Next.js
+        </span>{' '}
+        and{' '}
+        <span className="bg-[linear-gradient(135deg,#E18317,69%,hsl(var(--background)))] bg-clip-text text-transparent">
+          ElysiaJS
+        </span>
+      </Typography>
+
+      <div className="mt-8 flex items-center gap-4">
+        {session ? (
+          <>
+            <Typography className="text-center">Logged in as {session.user.name} </Typography>
+            <Button variant="outline" size="sm">
+              Sign out
+            </Button>
+          </>
+        ) : (
+          <Button variant="outline" asChild>
+            <Link href="/api/auth/discord">Login with Discord</Link>
+          </Button>
+        )}
+      </div>
+
+      <div className="mt-8">
+        <Typography className="text-center">
+          Latest Post: {post.data.content ?? 'You have no post yet'}
+        </Typography>
+      </div>
+    </main>
+  )
+}
 
 export default Page
