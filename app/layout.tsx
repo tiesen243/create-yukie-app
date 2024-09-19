@@ -3,6 +3,7 @@ import '@/app/globals.css'
 import { GeistSans } from 'geist/font/sans'
 import { ThemeProvider } from 'next-themes'
 
+import { QueryProvider } from '@/lib/elysia/react'
 import { seo } from '@/lib/seo'
 import { cn } from '@/lib/utils'
 
@@ -17,7 +18,7 @@ const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => (
       )}
     >
       <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </ThemeProvider>
     </body>
   </html>

@@ -12,6 +12,7 @@ export const postRouter = createElysia({ prefix: '/post' })
     '/createPost',
     async ({ db, session, body: { content }, error }) => {
       if (!session) return error('Unauthorized', 'You must be logged in to create a post')
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       const post = await db.post.create({
         data: { content, author: { connect: { id: session.user.id } } },

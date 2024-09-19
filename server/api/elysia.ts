@@ -8,27 +8,22 @@ const createContext = new Elysia()
   .derive(async () => {
     const session = await auth()
 
-    return {
-      db,
-      session,
-    }
+    return { db, session }
   })
   .as('plugin')
 
-const timmimgMiddleware = new Elysia()
+const timmingM = new Elysia()
   .state({ start: 0 })
-  .onBeforeHandle(({ store }) => {
-    store.start = Date.now()
-  })
-  .onAfterHandle(({ path, store: { start } }) => {
-    const end = Date.now()
-    console.log(`[Elysia] ${path} took ${end - start}ms to execute`)
-  })
+  .onBeforeHandle(({ store }) => (store.start = Date.now()))
+  .onAfterHandle(({ path, store: { start } }) =>
+    console.log(`[Elysia] ${path} took ${Date.now() - start}ms to execute`),
+  )
   .as('plugin')
 
 export const createElysia = <P extends string, S extends boolean>(options?: ElysiaConfig<P, S>) =>
   new Elysia({
     ...options,
+    aot: true,
   })
     .use(createContext)
-    .use(timmimgMiddleware)
+    .use(timmingM)

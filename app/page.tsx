@@ -1,15 +1,15 @@
 import type { NextPage } from 'next'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
-import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { api } from '@/lib/api'
 import { auth } from '@/server/auth'
+import { lucia } from '@/server/auth/lucia'
+import { Post } from './_components/post'
 
 const Page: NextPage = async () => {
   const session = await auth()
-  const post = await api.post.latestPost.get()
 
   return (
     <main className="container flex min-h-dvh max-w-screen-lg flex-col items-center justify-center overflow-x-hidden">
@@ -28,26 +28,30 @@ const Page: NextPage = async () => {
         </span>
       </Typography>
 
-      <div className="mt-8 flex items-center gap-4">
+      <div className="mt-4 flex items-center gap-2">
         {session ? (
           <>
-            <Typography className="text-center">Logged in as {session.user.name} </Typography>
-            <Button variant="outline" size="sm">
-              Sign out
-            </Button>
+            <span>Logged in as {session.user.name}</span>
+            <form
+              action={async () => {
+                'use server'
+                await lucia.invalidateSession(session.id)
+                cookies().delete(lucia.sessionCookieName)
+              }}
+            >
+              <Button variant="ghost" size="sm">
+                Logout
+              </Button>
+            </form>
           </>
         ) : (
-          <Button variant="outline" asChild>
-            <Link href="/api/auth/discord">Login with Discord</Link>
-          </Button>
+          <form action="/api/auth/discord" method="GET">
+            <Button variant="outline">Login with Discord</Button>
+          </form>
         )}
       </div>
 
-      <div className="mt-8">
-        <Typography className="text-center">
-          Latest Post: {post.data.content ?? 'You have no post yet'}
-        </Typography>
-      </div>
+      {session && <Post />}
     </main>
   )
 }
