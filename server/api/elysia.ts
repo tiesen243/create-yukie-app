@@ -25,7 +25,16 @@ import { auth } from '../auth'
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createElysiaContext = new Elysia().decorate('ctx', { db, session: auth }).as('plugin')
+export const createElysiaContext = new Elysia()
+  .derive(async () => {
+    const session = await auth()
+
+    console.log('>>> Elysia Request by', session?.user)
+
+    return { ctx: { db, session } }
+  })
+  .decorate('ctx', { db })
+  .as('plugin')
 
 /**
  * 2. INITIALIZATION

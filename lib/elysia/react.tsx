@@ -2,7 +2,7 @@
 
 import type { QueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { createEdenTreatyReactQuery, httpLink } from '@ap0nia/eden-react-query'
+import { createEdenTreatyReactQuery, httpBatchLink } from '@ap0nia/eden-react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import type { AppRouter } from '@/server/api/root'
@@ -20,7 +20,7 @@ const getQueryClient = () => {
 }
 
 // @ts-expect-error - lgtm
-export const api = createEdenTreatyReactQuery<AppRouter>()
+export const api = createEdenTreatyReactQuery<AppRouter>({ abortOnUnmount: true })
 
 export const ElysiaReactProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const queryClient = getQueryClient()
@@ -29,13 +29,8 @@ export const ElysiaReactProvider: React.FC<React.PropsWithChildren> = ({ childre
     api.createClient({
       links: [
         // @ts-expect-error - lgtm
-        httpLink({
+        httpBatchLink({
           domain: getBaseUrl() + '/api/elysia',
-          headers: () => {
-            const headers = new Headers()
-            headers.set('x-elysia-source', 'nextjs-react')
-            return headers
-          },
         }),
       ],
     }),
