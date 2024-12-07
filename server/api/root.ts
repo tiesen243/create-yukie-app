@@ -10,8 +10,9 @@ import { postRouter } from '@/server/api/routers/post'
  * All routers added in /api/routers should be manually added here.
  */
 const baseAppRouter = elysia({ prefix: '' })
-  // .use(edenPlugin({ batch: true, transformer: SuperJSON }))
+  // .use(edenPlugin({ batch: true, transformer: SuperJSON })) // make error
   .use(postRouter)
+
 const appRouter = elysia({ prefix: '/api/elysia' }).use(baseAppRouter)
 
 // export type definition of API
