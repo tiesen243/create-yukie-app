@@ -18,9 +18,6 @@ const typographyVariants = cva('font-sans text-base font-normal text-foreground'
     color: {
       primary: 'text-primary',
       secondary: 'text-secondary',
-      info: 'text-info',
-      success: 'text-success',
-      warning: 'text-warning',
       destructive: 'text-destructive',
       muted: 'text-muted-foreground',
     },

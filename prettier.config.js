@@ -4,6 +4,7 @@
 
 /** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
 const config = {
+  /* General Prettier Config */
   semi: false,
   tabWidth: 2,
   printWidth: 100,
@@ -12,27 +13,27 @@ const config = {
 
   plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
 
-  // Tailwind
+  /* Tailwind Classname Sorting Config */
   tailwindFunctions: ['cn', 'cva'],
 
-  // Sort Imports
-  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
+  /* Sort Imports Config */
   importOrder: [
     '<TYPES>',
-    '^(next/(.*)$)|^(next$)',
     '^(react/(.*)$)|^(react$)',
+    '^(next/(.*)$)|^(next$)',
     '<THIRD_PARTY_MODULES>',
     '',
-    '<TYPES>^([.|..|@]/.*)$',
+    '<TYPES>^(@/(.*)$)',
+    '<TYPES>^[.|..]',
     '^@/',
     '^[../]',
     '^[./]',
   ],
-
-  // Others
+  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
+  importOrderTypeScriptVersion: '4.4.0',
   overrides: [
-    { files: '*.json.hbs', options: { parser: 'json' } },
     { files: '*.js.hbs', options: { parser: 'babel' } },
+    { files: '*.json.hbs', options: { parser: 'json' } },
   ],
 }
 

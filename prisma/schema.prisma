@@ -1,6 +1,9 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,11 +16,11 @@ datasource db {
 model User {
   id        String @id @default(cuid())
   discordId String @unique
+  username  String @unique
   email     String @unique
 
-  username String
-  name     String
-  avatar   String
+  name   String
+  avatar String
 
   sessions Session[]
   posts    Post[]
@@ -36,10 +39,10 @@ model Session {
 }
 
 model Post {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(cuid())
   content String
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
   createdAt DateTime @default(now())

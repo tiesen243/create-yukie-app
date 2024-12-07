@@ -1,22 +1,20 @@
 import '@/app/globals.css'
 
-import { GeistSans } from 'geist/font/sans'
 import { ThemeProvider } from 'next-themes'
 
-import { QueryProvider } from '@/lib/elysia/react'
+import { ElysiaReactProvider } from '@/lib/elysia/react'
+import { geistSans } from '@/lib/fonts'
 import { seo } from '@/lib/seo'
 import { cn } from '@/lib/utils'
 
-export const metadata = seo({})
-
-const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => (
+export default ({ children }: Readonly<{ children: React.ReactNode }>) => (
   <html lang="en" suppressHydrationWarning>
-    <body className={cn('min-h-dvh font-sans', GeistSans.variable)}>
+    <body className={cn('font-sans antialiased', geistSans.variable)}>
       <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
-        <QueryProvider>{children}</QueryProvider>
+        <ElysiaReactProvider>{children}</ElysiaReactProvider>
       </ThemeProvider>
     </body>
   </html>
 )
 
-export default RootLayout
+export const metadata = seo({})
