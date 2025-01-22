@@ -14,7 +14,10 @@ export const usePosts = () => {
         .then((res) => (res.error ? Promise.reject(res.error.value) : res.data)),
   })
 
-  interface Input { title: string; content: string }
+  interface Input {
+    title: string
+    content: string
+  }
   const createPost = useMutation<unknown, Partial<Input>, Input>({
     mutationKey: ['post', 'create'],
     mutationFn: async (data) =>

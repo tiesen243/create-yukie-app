@@ -22,12 +22,6 @@ export default [
         ...tseslint.configs.stylisticTypeChecked,
       ],
       rules: {
-        '@typescript-eslint/restrict-template-expressions': 'off',
-        '@typescript-eslint/prefer-promise-reject-errors': 'off',
-        '@typescript-eslint/no-unused-vars': [
-          'error',
-          { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-        ],
         '@typescript-eslint/consistent-type-imports': [
           'warn',
           { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
@@ -40,6 +34,12 @@ export default [
           'error',
           { allowConstantLoopConditions: true },
         ],
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        ],
+        '@typescript-eslint/prefer-promise-reject-errors': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
         'import/no-anonymous-default-export': 'warn',
       },
     },
