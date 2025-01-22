@@ -1,10 +1,4 @@
-import { treaty } from '@elysiajs/eden'
 import { defaultShouldDehydrateQuery, QueryClient } from '@tanstack/react-query'
-
-import type { AppRouter } from '@/server/api/root'
-import { getBaseUrl } from '@/lib/utils'
-
-export const api = treaty<AppRouter>(getBaseUrl()).api.elysia
 
 export const createQueryClient = () =>
   new QueryClient({
@@ -18,5 +12,6 @@ export const createQueryClient = () =>
         shouldDehydrateQuery: (query) =>
           defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
       },
+      hydrate: {},
     },
   })

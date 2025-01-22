@@ -7,6 +7,7 @@ export default {
   content: ['./components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      container: { center: true, padding: '2rem', screens: { '2xl': '1400px' } },
       fontFamily: {
         sans: ['var(--font-geist-sans)', ...fontFamily.sans],
         mono: ['var(--font-geist-mono)', ...fontFamily.mono],

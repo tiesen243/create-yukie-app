@@ -10,6 +10,7 @@
 import type { ElysiaConfig } from 'elysia'
 import Elysia from 'elysia'
 
+import { auth } from '@/server/auth'
 import { db } from '@/server/db'
 
 /**
@@ -26,7 +27,9 @@ import { db } from '@/server/db'
  */
 export const createElysiaContext = new Elysia()
   .derive(async () => {
-    return { ctx: { db } }
+    const session = await auth()
+
+    return { ctx: { db, session } }
   })
   .decorate('ctx', { db })
   .as('plugin')
@@ -39,7 +42,25 @@ export const createElysiaContext = new Elysia()
  * errors on the backend.
  */
 export const elysia = <P extends string>(options?: ElysiaConfig<P>) =>
-  new Elysia(options).use(createElysiaContext)
+  new Elysia(options).use(createElysiaContext).onError(({ code, error }) => {
+    switch (code) {
+      case 'VALIDATION': {
+        const formattedErrors = error.all.reduce(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (acc: Record<string, string>, err: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            acc[err.path.slice(1)] = err.schema.error ?? err.message
+            return acc
+          },
+          {},
+        )
+
+        return formattedErrors
+      }
+      default:
+        return 'Unknown error'
+    }
+  })
 
 /**
  * Middleware for timing procedure execution and adding an artificial delay in development.
