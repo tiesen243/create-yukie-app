@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "check": "next lint && bun format && tsc --noEmit",
-    "clean": "git clean -xdf node_modules",
+    "clean": "git clean -xdf",
     "dev": "next dev --turbopack",
     "format": "prettier --check . --cache --cache --cache-location .cache/.prettiercache",
     "format:fix": "prettier --check . --write --cache --cache-location .cache/.prettiercache",
@@ -18,9 +18,14 @@
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.11.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.473.0",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"
   },
   "devDependencies": {
