@@ -22,6 +22,7 @@ export default [
         ...tseslint.configs.stylisticTypeChecked,
       ],
       rules: {
+        '@typescript-eslint/restrict-template-expressions': 'off',
         '@typescript-eslint/no-unused-vars': [
           'error',
           { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
