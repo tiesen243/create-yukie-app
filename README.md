@@ -1,5 +1,8 @@
 # Create Yukie App
 
+> [!WARNING]
+> This repository has been moved to [tiesen243/create-yuki-stack](https://github.com/tiesen243/create-yuki-stack)
+
 ## The Stack
 
 This stack is a web development stack focused on **simplicity**, **modularity**, and **full-stack typesafety**. It consists of:
